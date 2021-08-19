@@ -16,11 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UnitOfWork\" />
-    <Folder Include="Repository\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\E-CommerceApp.Core\E-CommerceApp.Core.csproj" />
   </ItemGroup>
 
