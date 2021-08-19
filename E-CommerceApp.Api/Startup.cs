@@ -1,16 +1,14 @@
+using E_CommerceApp.Core.Models;
+using E_CommerceApp.EF.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace E_CommerceApp.Api
 {
@@ -26,6 +24,23 @@ namespace E_CommerceApp.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("Default")));
+
+            services.AddIdentity<AppUser, IdentityRole>(option =>
+            {
+                option.Password.RequireDigit = false;
+                option.Password.RequireLowercase = false;
+                option.Password.RequiredLength = 6;
+                option.Password.RequiredUniqueChars = 0;
+                option.Password.RequireUppercase = false;
+                option.Password.RequireNonAlphanumeric = false;
+                option.SignIn.RequireConfirmedEmail = false;
+                option.Lockout.MaxFailedAccessAttempts = 5;
+                option.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+            }).AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -47,6 +62,8 @@ namespace E_CommerceApp.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

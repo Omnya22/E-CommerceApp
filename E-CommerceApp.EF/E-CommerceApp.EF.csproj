@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DataAccess\" />
     <Folder Include="UnitOfWork\" />
     <Folder Include="Repository\" />
   </ItemGroup>
