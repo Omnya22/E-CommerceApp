@@ -1,5 +1,7 @@
+using E_CommerceApp.Core.Interfaces;
 using E_CommerceApp.Core.Models;
 using E_CommerceApp.EF.DataAccess;
+using E_CommerceApp.EF.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -42,6 +44,11 @@ namespace E_CommerceApp.Api
             .AddDefaultTokenProviders();
 
             services.AddCors();
+            
+            services.AddControllers().AddNewtonsoftJson(
+                x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

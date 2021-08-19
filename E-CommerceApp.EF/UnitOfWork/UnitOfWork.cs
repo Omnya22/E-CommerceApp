@@ -11,11 +11,18 @@ namespace E_CommerceApp.EF.UnitOfWork
 
         public IGenericRepository<AppUser> Users { get; set; }
 
+        public IGenericRepository<Product> Products { get; set; }
+
+        public IGenericRepository<Order> Orders { get; set; }
+
         public UnitOfWork(AppDbContext context)
         {
             _context = context;
 
             Users = new GenericRepository<AppUser>(_context);
+            Orders = new GenericRepository<Order>(_context);
+            Products = new GenericRepository<Product>(_context);
+
         }
 
         public int Done()
