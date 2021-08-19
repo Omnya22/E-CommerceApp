@@ -41,6 +41,7 @@ namespace E_CommerceApp.Api
             }).AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
 
+            services.AddCors();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -58,6 +59,8 @@ namespace E_CommerceApp.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "E_CommerceApp.Api v1"));
             }
+            
+            app.UseCors(x => x.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 
             app.UseHttpsRedirection();
 

@@ -18,8 +18,4 @@
     <ProjectReference Include="..\E-CommerceApp.EF\E-CommerceApp.EF.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
