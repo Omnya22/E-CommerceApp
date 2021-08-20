@@ -28,9 +28,9 @@ namespace E_CommerceApp.Api.Controllers
 
         [HttpGet]
         [Route("GetAllOrders")]
-        public async Task<ActionResult> GetOrders()
+        public ActionResult GetOrders()
         {
-            var orders = await _unitOfWork.Orders.GetAllAsync();
+            var orders =_unitOfWork.OrderProducts.GetAll(new[] {"Orders"});
             return Ok(orders);
         }
 
@@ -83,7 +83,7 @@ namespace E_CommerceApp.Api.Controllers
                     };
 
                     order.OrderStatus = Status;
-                    order.Products = model.Products;
+                    //order.Products = model.Products;
 
                     _unitOfWork.Orders.Update(order);
 

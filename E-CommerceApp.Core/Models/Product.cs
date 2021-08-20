@@ -24,6 +24,6 @@ namespace E_CommerceApp.Core.Models
         [Display(Name = "Product Photo")]
         public string PhotoUrl { get; set; }
 
-        public ICollection<Order> Orders { get; set; }
+        public IList<OrderProduct> OrderProducts { get; set; }
     }
 }

@@ -101,6 +101,21 @@ namespace E_CommerceApp.EF.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("E_CommerceApp.Core.Models.OrderProduct", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "OrderId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderProducts");
+                });
+
             modelBuilder.Entity("E_CommerceApp.Core.Models.OrderStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -279,21 +294,6 @@ namespace E_CommerceApp.EF.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("OrderProduct", b =>
-                {
-                    b.Property<int>("OrdersId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrdersId", "ProductsId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("OrderProduct");
-                });
-
             modelBuilder.Entity("E_CommerceApp.Core.Models.Order", b =>
                 {
                     b.HasOne("E_CommerceApp.Core.Models.OrderStatus", "OrderStatus")
@@ -301,6 +301,25 @@ namespace E_CommerceApp.EF.Migrations
                         .HasForeignKey("OrderStatusId");
 
                     b.Navigation("OrderStatus");
+                });
+
+            modelBuilder.Entity("E_CommerceApp.Core.Models.OrderProduct", b =>
+                {
+                    b.HasOne("E_CommerceApp.Core.Models.Order", "Order")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("E_CommerceApp.Core.Models.Product", "Product")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -354,19 +373,14 @@ namespace E_CommerceApp.EF.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OrderProduct", b =>
+            modelBuilder.Entity("E_CommerceApp.Core.Models.Order", b =>
                 {
-                    b.HasOne("E_CommerceApp.Core.Models.Order", null)
-                        .WithMany()
-                        .HasForeignKey("OrdersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("OrderProducts");
+                });
 
-                    b.HasOne("E_CommerceApp.Core.Models.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("E_CommerceApp.Core.Models.Product", b =>
+                {
+                    b.Navigation("OrderProducts");
                 });
 #pragma warning restore 612, 618
         }

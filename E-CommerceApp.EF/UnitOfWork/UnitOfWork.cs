@@ -14,6 +14,9 @@ namespace E_CommerceApp.EF.UnitOfWork
         public IGenericRepository<Product> Products { get; set; }
 
         public IGenericRepository<Order> Orders { get; set; }
+        
+        public IGenericRepository<OrderProduct> OrderProducts { get; set; }
+
 
         public UnitOfWork(AppDbContext context)
         {
@@ -22,7 +25,7 @@ namespace E_CommerceApp.EF.UnitOfWork
             Users = new GenericRepository<AppUser>(_context);
             Orders = new GenericRepository<Order>(_context);
             Products = new GenericRepository<Product>(_context);
-
+            OrderProducts = new GenericRepository<OrderProduct>(_context);
         }
 
         public int Done()
