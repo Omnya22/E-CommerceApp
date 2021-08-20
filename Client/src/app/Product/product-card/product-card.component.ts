@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/models/product-model';
 import { ProductService } from './../../services/product.service';
 
 @Component({
@@ -15,6 +14,7 @@ export class ProductCardComponent implements OnInit {
   ProductListWithoutFilter:any=[];
 
   ModalTitle:string;
+  Detail:boolean=false;
   ActivateDetail:boolean=false;
   product:any;
 
@@ -29,19 +29,21 @@ export class ProductCardComponent implements OnInit {
   detailClick(item){
     console.log(item);
     this.product=item;
+    this.Detail=true;
     this.product={
       id:item.id,
       name:item.name,
       description:item.description,
       price:item.price,
-      PhotoName:item.PhotoName}
+      PhotoName:item.PhotoName
+      }
     console.log(this.product);
     this.ModalTitle="Detail Product";
     this.ActivateDetail=true;
   }
+
   closeClick(){
     this.ActivateDetail=false;
     this.refreshProductList();
   }
-
 }

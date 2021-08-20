@@ -16,6 +16,9 @@ export class ProductDetailComponent implements OnInit {
 
   ModalTitle:string;
   ActivateAddEdit:boolean=false;
+  ActivateDetail:boolean=false;
+  Detail:boolean=false;
+
   product:any;
 
   ngOnInit(): void {
@@ -33,6 +36,9 @@ export class ProductDetailComponent implements OnInit {
     console.log(this.product);
     this.ModalTitle="Add Product";
     this.ActivateAddEdit=true;
+    this.ActivateDetail=false;
+    this.Detail=false;
+
   }
 
   editClick(item){
@@ -48,6 +54,9 @@ export class ProductDetailComponent implements OnInit {
     console.log(this.product);
     this.ModalTitle="Edit Product";
     this.ActivateAddEdit=true;
+    this.ActivateDetail=false;
+    this.Detail=false;
+
   }
 
   deleteClick(item){
@@ -69,6 +78,7 @@ export class ProductDetailComponent implements OnInit {
   refreshProductList(){
     this.service.getProductList().subscribe(data=>{
       this.ProductList = this.ProductListWithoutFilter=data;
+
     });
   }
 

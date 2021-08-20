@@ -19,8 +19,18 @@
       <li class="nav-item" *ngIf="!isUserRegistered()">
         <a class="nav-link"  routerLink='Login' >Login</a>
       </li>
-      <li class="nav-item" *ngIf="isUserRegistered()">
+      <!-- <li class="nav-item" *ngIf="isUserRegistered()">
         <a class="nav-link" (click)="Logout()" >Logout</a>
+      </li> -->
+      <li class="nav-item dropdown" *ngIf="isUserRegistered()">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src=""> UserName
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="Orders">My Orders</a>
+          <div class="dropdown-divider"></div>
+          <a class="nav-link nav-link text-dark ml-4" (click)="Logout()" >Logout</a>
+        </div>
       </li>
     </ul>
   </div>

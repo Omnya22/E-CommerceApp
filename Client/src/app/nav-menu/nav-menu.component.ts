@@ -16,7 +16,7 @@ export class NavMenuComponent implements OnInit {
     private auth: AuthService
   ) { }
 
-  title = 'Cinema Movies';
+  title = 'E-commerce App';
   ngOnInit() {
     if (this.isUserRegistered()) {
         this.Logout();
