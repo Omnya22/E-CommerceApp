@@ -78,6 +78,7 @@ export class ProductDetailComponent implements OnInit {
   refreshProductList(){
     this.service.getProductList().subscribe(data=>{
       this.ProductList = this.ProductListWithoutFilter=data;
+
     });
   }
 
