@@ -10,7 +10,6 @@ namespace E_CommerceApp.EF.DataAccess
         {
         }
 
-        
         protected override void OnModelCreating(ModelBuilder builder)
         {
 

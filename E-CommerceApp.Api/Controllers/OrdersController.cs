@@ -20,7 +20,7 @@ namespace E_CommerceApp.Api.Controllers
         [Route("GetOrder")]
         public async Task<ActionResult> GetById(int id)
         {
-            var order = await _unitOfWork.Orders.FindAsync(o => o.Id == id, new[] { "Product" });
+            var order = await _unitOfWork.Orders.FindAsync(o => o.Id == id, new[] { "OrderProducts", "OrderStatus" });
             if (order == null)
                 return NotFound();
             return Ok(order);
@@ -28,9 +28,9 @@ namespace E_CommerceApp.Api.Controllers
 
         [HttpGet]
         [Route("GetAllOrders")]
-        public ActionResult GetOrders()
+        public async Task<ActionResult> GetOrders()
         {
-            var orders =_unitOfWork.OrderProducts.GetAll(new[] {"Orders"});
+            var orders =await _unitOfWork.Orders.GetAllAsync(new[] { "OrderProducts", "OrderStatus" });
             return Ok(orders);
         }
 
@@ -83,7 +83,7 @@ namespace E_CommerceApp.Api.Controllers
                     };
 
                     order.OrderStatus = Status;
-                    //order.Products = model.Products;
+                    order.OrderProducts = model.OrderProducts;
 
                     _unitOfWork.Orders.Update(order);
 
