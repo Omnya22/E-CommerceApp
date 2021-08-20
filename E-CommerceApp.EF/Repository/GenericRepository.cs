@@ -123,10 +123,6 @@ namespace E_CommerceApp.EF.Repository
             return await query.ToListAsync();
         }
 
-        public void State(T entity)
-        {
-            _context.Entry<T>(entity).State = EntityState.Unchanged;
-        }
     }
 
 }

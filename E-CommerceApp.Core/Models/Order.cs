@@ -10,6 +10,7 @@ namespace E_CommerceApp.Core.Models
         [Display(Name = "Order Status")]
         public OrderStatus OrderStatus { get; set; }
         
-        public ICollection<Product> Products { get; set; }
+        public IList<OrderProduct> OrderProducts { get; set; }
+
     }
 }

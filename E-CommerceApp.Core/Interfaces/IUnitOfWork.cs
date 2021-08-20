@@ -8,6 +8,7 @@ namespace E_CommerceApp.Core.Interfaces
         IGenericRepository<AppUser> Users { get; }
         IGenericRepository<Product> Products { get; }
         IGenericRepository<Order> Orders { get; }
+        IGenericRepository<OrderProduct> OrderProducts { get; }
 
         int Done();
     }
