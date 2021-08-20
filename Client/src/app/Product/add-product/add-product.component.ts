@@ -23,6 +23,7 @@ export class AddProductComponent implements OnInit {
   frmProduct:String;
   PhotoName:String;
   PhotoPath:String;
+  Detail:boolean=false;
 
   ngOnInit(): void {
     this.load();
@@ -35,6 +36,7 @@ export class AddProductComponent implements OnInit {
     this.description = this.product.description;
     this.PhotoName = this.product.PhotoName;
     this.PhotoPath=this.service.PhotoUrl+this.PhotoName;
+    this.Detail = this.Detail = true;
   }
 
   addProduct(){
@@ -44,7 +46,8 @@ export class AddProductComponent implements OnInit {
       Description:this.description,
       Price:this.price,
       PhotoName:this.PhotoName,
-      frmProduct:this.frmProduct
+      frmProduct:this.frmProduct,
+      Detail:this.Detail = true
     };
     this.service.addProduct(val).subscribe(res=>{
       alert(res.toString());
@@ -58,7 +61,8 @@ export class AddProductComponent implements OnInit {
       Description:this.description,
       Price:this.price,
       PhotoName:this.PhotoName,
-      frmProduct:this.frmProduct
+      frmProduct:this.frmProduct,
+      Detail:this.Detail = true
     };
 
     this.service.updateProduct(val).subscribe(res=>{
