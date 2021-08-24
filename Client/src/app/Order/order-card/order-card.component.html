@@ -9,10 +9,8 @@
   </thead>
   <tbody>
       <tr *ngFor="let dataItem of orderList">
+          <td>#</td>
           <td>
-          </td>
-          <td>
-
             <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" [checked]="dataItem.orderStatus.isAccepted">
               <label class="custom-control-label"></label>
@@ -30,7 +28,7 @@
               <label class="custom-control-label"></label>
             </div>
           </td>
-          <!-- <td>
+          <td [hidden]="!isAdmin">
               <button type="button" class="btn btn-light mr-1"
                       data-toggle="modal" data-target="#exampleModal"
                       (click)="editClick(dataItem)"
@@ -40,12 +38,46 @@
                   <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                 </svg>
               </button>
-              <button type="button" class="btn btn-light mr-1"(click)="deleteClick(dataItem)">
-                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
-                </svg>
-              </button>
-          </td> -->
+          </td>
       </tr>
   </tbody>
 </table>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ModalTitle}}</h5>
+          <button type="button" class="close"
+          data-dismiss="modal" aria-label="Close"
+          (click)="closeClick()" >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex flex-col bd-highlight mb-3">
+            <div class="form-group col" style="width: 60%;">
+              <div class="form-check custom-checkbox">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="isWaited" value="isWaited" [ngModelOptions]="{standalone: true}" [checked]="false">
+                <label class="form-check-label" for="customCheck1">Waiting</label>
+              </div>
+
+              <div class="form-check custom-checkbox">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="isAccepted" value="isAccepted" [ngModelOptions]="{standalone: true}" [checked]="isAccepted">
+                <label class="form-check-label" for="customCheck1">Accepted</label>
+              </div>
+
+              <div class="form-check custom-checkbox">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="isRejected" value="isRejected" [ngModelOptions]="{standalone: true}" [checked]="isRejected">
+                <label class="form-check-label" for="customCheck1">Rejected</label>
+              </div>
+
+            </div>
+          </div>
+          <button type="submit" (click)="updateOrder()"  class="btn btn-primary">
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

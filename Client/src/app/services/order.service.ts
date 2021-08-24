@@ -22,7 +22,7 @@ export class OrderService {
   }
 
   updateOrder(val:any){
-    return this.http.put(this.APIUrl+'UpdateOrder/',val);
+    return this.http.put(this.APIUrl+'UpdateOrder',val);
   }
 
   deleteOrder(val:any){
