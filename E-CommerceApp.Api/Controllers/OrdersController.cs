@@ -1,5 +1,6 @@
 ﻿using E_CommerceApp.Core.Interfaces;
 using E_CommerceApp.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -17,6 +18,7 @@ namespace E_CommerceApp.Api.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("GetOrder")]
         public async Task<ActionResult> GetById(int id)
         {
@@ -27,6 +29,7 @@ namespace E_CommerceApp.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize("Admin")]
         [Route("GetAllOrders")]
         public async Task<ActionResult> GetOrders()
         {
@@ -36,6 +39,7 @@ namespace E_CommerceApp.Api.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("AddOrder")]
         public async Task<ActionResult> AddOrder(Order model)
         {
@@ -52,7 +56,7 @@ namespace E_CommerceApp.Api.Controllers
                 model.OrderStatus = Status;
          
                 var result = await _unitOfWork.Orders.AddAsync(model);
-                _unitOfWork.Done();
+                _unitOfWork.Commit();
 
                 if (result != null)
                     return Ok(result);
@@ -62,6 +66,7 @@ namespace E_CommerceApp.Api.Controllers
 
 
         [HttpPut]
+        [Authorize("Admin")]
         [Route("UpdateOrder")]
         public async Task<ActionResult> UpdateOrder(Order model)
         {
@@ -83,11 +88,10 @@ namespace E_CommerceApp.Api.Controllers
                     };
 
                     order.OrderStatus = Status;
-                    order.OrderProducts = model.OrderProducts;
-
+                    
                     _unitOfWork.Orders.Update(order);
 
-                    _unitOfWork.Done();
+                    _unitOfWork.Commit();
                     return Ok(model);
                 }
             }
@@ -96,6 +100,7 @@ namespace E_CommerceApp.Api.Controllers
         }
 
         [HttpDelete]
+        [Authorize("Admin")]
         [Route("DeleteOrder")]
         public async Task<ActionResult> DeleteOrder(int id)
         {
@@ -105,7 +110,7 @@ namespace E_CommerceApp.Api.Controllers
             else
             {
                 _unitOfWork.Orders.Delete(order);
-                _unitOfWork.Done();
+                _unitOfWork.Commit();
                 return Ok(order);
             }
         }

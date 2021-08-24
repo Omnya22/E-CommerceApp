@@ -28,9 +28,9 @@ namespace E_CommerceApp.EF.UnitOfWork
             OrderProducts = new GenericRepository<OrderProduct>(_context);
         }
 
-        public int Done()
+        public bool Commit()
         {
-            return _context.SaveChanges();
+            return _context.SaveChanges() > 0;
         }
 
         public void Dispose()

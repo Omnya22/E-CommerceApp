@@ -1,18 +1,15 @@
-using E_CommerceApp.Core.Interfaces;
-using E_CommerceApp.Core.Models;
-using E_CommerceApp.EF.DataAccess;
-using E_CommerceApp.EF.UnitOfWork;
+using E_Commerce.Api.Configuration;
+using E_Commerce.Api.DataAccess;
+using E_Commerce.Api.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 
-namespace E_CommerceApp.Api
+namespace E_Commerce.Api
 {
     public class Startup
     {
@@ -26,10 +23,14 @@ namespace E_CommerceApp.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            
 
-            services.AddIdentity<AppUser, IdentityRole>(option =>
+            var mongoDbSettings = Configuration.GetSection(nameof(MongoDbConfig)).Get<MongoDbConfig>();
+
+            services.AddSingleton<AppDbContext>();
+
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>(option =>
             {
                 option.Password.RequireDigit = false;
                 option.Password.RequireLowercase = false;
@@ -40,20 +41,16 @@ namespace E_CommerceApp.Api
                 option.SignIn.RequireConfirmedEmail = false;
                 option.Lockout.MaxFailedAccessAttempts = 5;
                 option.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
-            }).AddEntityFrameworkStores<AppDbContext>()
-            .AddDefaultTokenProviders();
-
-            services.AddCors();
+            })
+                .AddMongoDbStores<ApplicationUser, ApplicationRole, Guid>(
+                    mongoDbSettings.ConnectionString, mongoDbSettings.Name);
             
-            services.AddControllers().AddNewtonsoftJson(
-                x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddControllers();
+            
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "E_CommerceApp.Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "E_Commerce.Api", Version = "v1" });
             });
         }
 
@@ -64,19 +61,15 @@ namespace E_CommerceApp.Api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "E_CommerceApp.Api v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "E_Commerce.Api v1"));
             }
-            
-            app.UseCors(x => x.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 
             app.UseHttpsRedirection();
-
-            app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthentication();
-
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

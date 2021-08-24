@@ -1,0 +1,17 @@
+ {
+    "id": "54fd30e0-0f25-4c69-8146-27d174e6ca82",
+    "userName": "Admin",
+    "normalizedUserName": "ADMIN",
+    "email": "admin@example.com",
+    "normalizedEmail": "ADMIN@EXAMPLE.COM",
+    "emailConfirmed": false,
+    "passwordHash": "123456789",
+    "securityStamp": "LV4WE26FOUDCOH2TWP5UVGFXKAVX27CH",
+    "concurrencyStamp": "f4f8d2ed-c2a0-4223-a67f-bf5c60ff67af",
+    "phoneNumber": null,
+    "phoneNumberConfirmed": false,
+    "twoFactorEnabled": false,
+    "lockoutEnd": null,
+    "lockoutEnabled": true,
+    "accessFailedCount": 0
+  }

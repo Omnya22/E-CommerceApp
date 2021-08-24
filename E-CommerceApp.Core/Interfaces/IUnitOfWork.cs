@@ -10,6 +10,6 @@ namespace E_CommerceApp.Core.Interfaces
         IGenericRepository<Order> Orders { get; }
         IGenericRepository<OrderProduct> OrderProducts { get; }
 
-        int Done();
+        bool Commit();
     }
 }

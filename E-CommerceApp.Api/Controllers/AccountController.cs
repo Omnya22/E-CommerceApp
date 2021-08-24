@@ -1,8 +1,7 @@
 ﻿using E_CommerceApp.Core.Interfaces;
 using E_CommerceApp.Core.Models;
 using E_CommerceApp.Core.ViewModels;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
@@ -29,13 +28,15 @@ namespace E_CommerceApp.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize("Admin")]
         [Route("GetAllUsers")]
-        public ActionResult Get()
+        public async Task<ActionResult> Get()
         {
-            return Ok(_unitOfWork.Users.GetAll());
+            return Ok(await _unitOfWork.Users.GetAllAsync());
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("Register")]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -69,6 +70,7 @@ namespace E_CommerceApp.Api.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("Login")]
         public async Task<ActionResult> Login(LoginViewModel model)
         {
@@ -87,14 +89,16 @@ namespace E_CommerceApp.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize("Admin")]
         [Route("Logout")]
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync();
+            await _signInManager.SignOutAsync();
             return Ok();
         }
 
         [HttpGet]
+        [Authorize("Admin")]
         [Route("UserExists")]
         public async Task<IActionResult> UserExists(string username)
         {
@@ -105,6 +109,7 @@ namespace E_CommerceApp.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize("Admin")]
         [Route("EmailExists")]
         public async Task<IActionResult> EmailExists(string email)
         {
