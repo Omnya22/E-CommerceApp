@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
         this.service.Login(this.logModel).subscribe(success => {
           const email = this.loginForm.value.email;
           this.auth.installStorage(email);
-          this.route.navigate(['']);
+          this.route.navigate(['Orders']);
         }, err => {
           console.log(err);
           this.message = "Login Failed";

@@ -18,6 +18,7 @@ export class ProductDetailComponent implements OnInit {
   ActivateAddEdit:boolean=false;
   ActivateDetail:boolean=false;
   Detail:boolean=false;
+  PhotoPath="https://localhost:44382/Photos/";
 
   product:any;
 
@@ -31,36 +32,32 @@ export class ProductDetailComponent implements OnInit {
       name:"",
       description:"",
       price:0,
-      PhotoName:"unknownProduct.jpeg"
+      PhotoUrl:"unknownProduct.jpeg"
     }
-    console.log(this.product);
     this.ModalTitle="Add Product";
     this.ActivateAddEdit=true;
     this.ActivateDetail=false;
     this.Detail=false;
-
+    this.PhotoPath=this.PhotoPath+this.product.PhotoUrl
   }
 
   editClick(item){
-    console.log(item);
     this.product=item;
-    console.log(this.product);
     this.product={
       id:item.id,
       name:item.name,
       description:item.description,
       price:item.price,
-      PhotoName:item.PhotoName}
-    console.log(this.product);
+      PhotoUrl:item.photoUrl,
+      PhotoPath:this.PhotoPath+item.photoUrl
+    }
     this.ModalTitle="Edit Product";
     this.ActivateAddEdit=true;
     this.ActivateDetail=false;
     this.Detail=false;
-
   }
 
   deleteClick(item){
-    console.log(item);
     if(confirm('Are you sure??')){
       this.service.deleteProduct(item.id).subscribe(data=>{
         alert(data.toString());
@@ -78,7 +75,6 @@ export class ProductDetailComponent implements OnInit {
   refreshProductList(){
     this.service.getProductList().subscribe(data=>{
       this.ProductList = this.ProductListWithoutFilter=data;
-
     });
   }
 

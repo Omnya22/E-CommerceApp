@@ -8,8 +8,6 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
 
   email: string;
-  expire: string;
-  role: string;
 
   constructor(
     private http: HttpClient) {

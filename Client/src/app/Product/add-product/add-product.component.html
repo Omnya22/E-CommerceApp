@@ -19,7 +19,7 @@
       </div>
   </div>
   <div class="ml-3 bd-highlight" style="width: 40%;">
-    <img [src]=PhotoPath height="250px;" width="200px;">
+    <img [src]=PhotoPath+PhotoUrl  height="250px;" width="200px;">
     <input type="file" (change)="uploadPhoto($event)" class="mt-2" [disabled]="!Detail" />
   </div>
 </div>

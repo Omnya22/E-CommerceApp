@@ -17,9 +17,11 @@ export class NavMenuComponent implements OnInit {
   ) { }
 
   title = 'E-commerce App';
+  emailUser:string;
+  isAdmin:boolean= false;
   ngOnInit() {
     if (this.isUserRegistered()) {
-        this.Logout();
+      this.Logout();
     }
   }
 
@@ -35,7 +37,8 @@ export class NavMenuComponent implements OnInit {
 
   isUserRegistered() {
     const email = !!localStorage.getItem('email');
-    const role = !!localStorage.getItem('role');
+    this.emailUser = localStorage.getItem('email');
+    this.emailUser =="admin@example.com" ? this.isAdmin = true : this.isAdmin = false;
     if (email) {
       return true;
     }
